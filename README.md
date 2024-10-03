@@ -1,6 +1,11 @@
 # Radio Browser Challenge
 
-## Introdução
+## CSS
+
+Utilizei bootstrap sendo incluido diretamente no index.html para que assim que possa usa-lo em todas as paginas;
+Alem disso, utilizei alguns modules.css que se tratavam de pequenos estilos nos componentes.
+
+
 
 Este é um desafio para testar seus conhecimentos de Front-end;
 

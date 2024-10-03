@@ -5,4 +5,10 @@
     margin-top: 4px;
     padding: 4px;
     width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+h2{
+    color: #fff;
 }
