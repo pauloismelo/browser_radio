@@ -1,15 +1,19 @@
 import { useEffect, useState } from "react";
 import View_radios from "./View_radios";
+import axios from "axios";
 
-function View() {
+function View({radio}) {
    const [favoritas, setFavoritas]= useState([]);
 
 
     useEffect(()=>{
+
+        
+
         setFavoritas(localStorage.getItem("fav"));
-        console.log(favoritas)
-    },[])
-   
+        console.log('Pegar favoritas', favoritas.name)
+        
+    },[favoritas])
    
     return ( 
     <div className="text-center">
@@ -20,9 +24,10 @@ function View() {
         </div>
 
         <div>
-            {favoritas>0 &&
-                favoritas.map((favorita)=>(
-                    <View_radios name={favorita.name} city="" radio={favorita} state=""/>
+            { radio.length>0 &&
+                radio.map((valor)=>(
+                    
+                    <View_radios name={valor} city="" radio={valor} state=""/>
                 ))
 
             }

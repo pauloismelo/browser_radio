@@ -10,27 +10,35 @@ function App() {
   const [radio, setRadio] = useState([]);
   const [search, setSearch] = useState();
   const [fav, setFav] = useState([]);
-  const [viewdiv, setViewdiv] = useState(false);
   
 
   async function getData(){
     let response = await axios(`https://de1.api.radio-browser.info/json/stations/search?limit=10`);
-    setRadio(response.data);
+    setRadio(response.data)
   }
 
-  useEffect(()=>{
-    if (fav.length>0){
-      
-      setViewdiv(false);
-    }else{
-      getData(); 
+  function DataFav(array_fav, radio){
+    const array = array_fav.split(',');
+    if (array == null) return;
+
+    for (let x=0; x<array.length; x++){
+      var show_fav=radio.filter((valor)=>(valor.changeuuid===array[x]))
     }
-  },[viewdiv]);
+    //pensar uma forma de filtrar um array atraves de outro array
+    console.log('=====Show: ',show_fav)
+    return setFav(show_fav)
+    
+  }
 
   
-  
-  
+  useEffect(()=>{
+    getData(); 
 
+    if (typeof radio!=undefined){
+        DataFav(localStorage.getItem("fav"),radio)
+    }
+    
+  },[])
   
   
   function Change(e){ // Search Radio
@@ -45,32 +53,24 @@ function App() {
           setRadio(radio)
   }
 
-  //vou usar usestate no lugar de localstorage
+  
 
   function ChamaFav(x){ //put Favorite radio
-
-    let list_fav=[];
-    let encontrou='';
-    
-    if (fav.length>0){
-      list_fav=fav;
-    }
-    for (let k=0; k<list_fav.length;k++){
-      if (list_fav[k]==x.changeuuid){
-        //console.log('encontrou');
-        encontrou='s';
+    //console.log('retorno:', localStorage.getItem("fav"))
+      if (localStorage.getItem("fav")!==null){
+          var array_fav = [localStorage.getItem("fav")];
+          array_fav.push(x.changeuuid)
+      }else{
+        var array_fav = [x.changeuuid];
+        //array_fav.push(x)
       }
-    }
-    if (encontrou!=='s'){
-      list_fav.push(x.changeuuid);
-    }
-    
-    
-    setFav(list_fav);
-    setViewdiv(true);
+     
+      
+      localStorage.setItem("fav", array_fav)
+
+      DataFav(localStorage.getItem("fav"),radio)
   }
 
-  
   
   return (
     <div className="App">
@@ -98,11 +98,9 @@ function App() {
                   <div className="col-6 text-white">Favorite Radios</div>
                   <div className="col-6 text-white"><i className="fa fa-search"></i> Search stations</div>
               </div>
-              
-              
-              
+
               <div>
-                  {typeof fav!==null &&
+                  { fav.length>0 &&
                       fav.map((valor)=>(
                           
                           <View_radios key={valor} name={valor} city="" radio={valor} state=""/>
