@@ -1,4 +1,6 @@
-# Radio Browser Challenge
+# Radio Browser Challenge - Desafio proposto pela Coodesh para testar alguns conhecimentos sobre o frontend. 
+
+Esse desafio ainda está em desenvolvimento... 
 
 ## CSS
 
